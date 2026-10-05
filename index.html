@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParkSight - Intelligent Parking Occupancy Forecasting</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <meta name="description" content="ParkSight is an enterprise parking analytics and occupancy forecasting platform utilizing Gradient Boosting machine learning.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%230f172a%22 stroke-width=%222%22><rect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/><path d=%22M9 17V7h4a3 3 0 0 1 0 6H9%22/></svg>">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-navbar">
+      <div class="nav-inner">
+        <!-- Brand Identity -->
+        <a href="#dashboard" class="brand-section">
+          <div class="brand-logo">
+            <span>P</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">ParkSight</span>
+            <span class="brand-tagline">Smart Parking Occupancy Predictor</span>
+          </div>
+        </a>
+
+        <!-- Main Navigation Links -->
+        <nav class="nav-links" id="navLinksContainer">
+          <a href="#dashboard" class="nav-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+
+          <a href="#prediction" class="nav-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Prediction
+          </a>
+
+          <a href="#analytics" class="nav-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            Analytics
+          </a>
+
+          <a href="#about" class="nav-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            About
+          </a>
+        </nav>
+
+        <!-- Right Metadata / Badges -->
+        <div class="nav-meta">
+          <span class="telemetry-pill">
+            <span class="live-dot"></span>
+            Dataset: 47,605 Records
+          </span>
+          <span class="telemetry-pill">
+            Model: Gradient Boosting (R² 0.942)
+          </span>
+        </div>
+
+        <!-- Mobile Navigation Menu Toggle Button -->
+        <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle Navigation Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Context Bar (Facility & Synchronized Clock) -->
+    <div class="context-bar">
+      <div class="context-inner">
+        <div class="facility-info">
+          <span class="facility-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            KLCC Parking Facility
+          </span>
+          <span class="facility-meta">
+            Dataset Source: <strong>parking-klcc-2016-2017.txt (47,605 Observations)</strong>
+          </span>
+        </div>
+
+        <div class="timestamp-indicator">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span id="telemetryClock">Local Time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main View Container -->
+    <main class="main-content">
+      <div id="viewContent" class="view-container active">
+        <!-- Rendered dynamically by Router based on active hash -->
+      </div>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div>
+          <strong>ParkSight</strong> — Smart Parking Occupancy Predictor (Machine Learning Project) &copy; 2026.
+        </div>
+        <div class="footer-links">
+          <a href="#dashboard" class="footer-link">Dashboard</a>
+          <a href="#prediction" class="footer-link">Prediction</a>
+          <a href="#analytics" class="footer-link">Analytics</a>
+          <a href="#about" class="footer-link">About</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Global Toast Notification Element -->
+  <div id="globalToast" class="toast-notice"></div>
+
+  <!-- Chart.js Engine (Vendor local with CDN fallback) -->
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script>
+    if (typeof Chart === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- Application Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/prediction.js"></script>
+  <script src="js/views/analytics.js"></script>
+  <script src="js/views/about.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
