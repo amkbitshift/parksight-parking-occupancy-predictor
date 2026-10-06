@@ -114,6 +114,9 @@ The application will launch and open automatically in your browser at:
   ```
 
 ---
+<img width="1920" height="1140" alt="Screenshot 2026-10-05 214307" src="https://github.com/user-attachments/assets/a0386183-db3a-45bf-b169-e8b88b273759" />
+<img width="1920" height="1140" alt="Screenshot 2026-10-05 214300" src="https://github.com/user-attachments/assets/84f3f9e7-bc30-46b8-96b0-927c274b91db" />
+<img width="1920" height="1140" alt="Screenshot 2026-10-05 214253" src="https://github.com/user-attachments/assets/c8cada90-7355-4413-a57b-be57c2e3c72d" />
 
 ## License
 
