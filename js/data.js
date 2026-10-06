@@ -216,6 +216,50 @@ const ParkSightData = {
   nominalCapacity: 2500,
 
   /**
+   * Resolve configurable API Base URL.
+   * Priority:
+   * 1. window.API_BASE_URL / window.PARKSIGHT_API_BASE_URL / window.__ENV__.API_BASE_URL
+   * 2. <meta name="api-base-url" content="..."> in document head
+   * 3. localStorage 'API_BASE_URL' / 'PARKSIGHT_API_BASE_URL'
+   * 4. Default: '' (relative to current origin, works seamlessly when served by FastAPI)
+   */
+  getApiBaseUrl() {
+    if (typeof window !== 'undefined') {
+      if (typeof window.API_BASE_URL === 'string' && window.API_BASE_URL.trim() !== '') {
+        return window.API_BASE_URL.trim().replace(/\/+$/, '');
+      }
+      if (typeof window.PARKSIGHT_API_BASE_URL === 'string' && window.PARKSIGHT_API_BASE_URL.trim() !== '') {
+        return window.PARKSIGHT_API_BASE_URL.trim().replace(/\/+$/, '');
+      }
+      if (window.__ENV__ && typeof window.__ENV__.API_BASE_URL === 'string' && window.__ENV__.API_BASE_URL.trim() !== '') {
+        return window.__ENV__.API_BASE_URL.trim().replace(/\/+$/, '');
+      }
+      const metaTag = document.querySelector('meta[name="api-base-url"]');
+      if (metaTag && metaTag.content && !metaTag.content.startsWith('%') && metaTag.content.trim() !== '') {
+        return metaTag.content.trim().replace(/\/+$/, '');
+      }
+      try {
+        const stored = localStorage.getItem('API_BASE_URL') || localStorage.getItem('PARKSIGHT_API_BASE_URL');
+        if (stored && stored.trim() !== '') {
+          return stored.trim().replace(/\/+$/, '');
+        }
+      } catch (e) {
+        // Ignore localStorage restrictions
+      }
+    }
+    return '';
+  },
+
+  /**
+   * Helper to format full API URL using configurable base URL
+   */
+  getApiUrl(endpoint) {
+    const base = this.getApiBaseUrl();
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    return `${base}${cleanEndpoint}`;
+  },
+
+  /**
    * Real Python Backend Integration
    * Sends the 7 features in exact training order to POST /api/predict:
    * ['Hour', 'Day', 'Month', 'Day_of_Week', 'Is_Weekend', 'Previous_Occupancy', 'Rolling_Average_3']
@@ -258,7 +302,7 @@ const ParkSightData = {
       Rolling_Average_3: roll
     };
 
-    const response = await fetch('/api/predict', {
+    const response = await fetch(this.getApiUrl('/api/predict'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -290,7 +334,7 @@ const ParkSightData = {
    * Fetch Real Dashboard Dataset & Forecast Metrics
    */
   async fetchDashboardData() {
-    const res = await fetch('/api/dashboard');
+    const res = await fetch(this.getApiUrl('/api/dashboard'));
     if (!res.ok) {
       throw new Error(`Failed to load dashboard data (HTTP ${res.status})`);
     }
@@ -301,7 +345,7 @@ const ParkSightData = {
    * Fetch Real Analytics Calculations & Model Evaluations
    */
   async fetchAnalyticsData() {
-    const res = await fetch('/api/analytics');
+    const res = await fetch(this.getApiUrl('/api/analytics'));
     if (!res.ok) {
       throw new Error(`Failed to load analytics data (HTTP ${res.status})`);
     }

@@ -6,6 +6,7 @@
   <title>ParkSight - Intelligent Parking Occupancy Forecasting</title>
   <link rel="stylesheet" href="css/styles.css">
   <meta name="description" content="ParkSight is an enterprise parking analytics and occupancy forecasting platform utilizing Gradient Boosting machine learning.">
+  <meta name="api-base-url" content="">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%230f172a%22 stroke-width=%222%22><rect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/><path d=%22M9 17V7h4a3 3 0 0 1 0 6H9%22/></svg>">
 </head>
 <body>
@@ -148,6 +149,12 @@
   </script>
 
   <!-- Application Modules -->
+  <script>
+    // Configurable API Base URL:
+    // If the frontend is hosted separately from the FastAPI backend, set window.API_BASE_URL
+    // e.g. window.API_BASE_URL = "https://your-backend.onrender.com";
+    window.API_BASE_URL = window.API_BASE_URL || "";
+  </script>
   <script src="js/data.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/views/dashboard.js"></script>
